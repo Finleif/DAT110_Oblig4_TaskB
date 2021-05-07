@@ -38,6 +38,15 @@ public class App {
 
         get("/accessdevice/log/", (req, res) -> accesslog.toJson());
 
+        get("/accessdevice/log/:id", (req, res) -> {
+
+
+            int id = Integer.parseInt(req.params("id"));
+
+            return gson.toJson(accesslog.get(id));
+
+        });
+
 
         post("/accessdevice/log/", ((request, response) -> {
             String message = gson.fromJson(request.body(), AccessMessage.class).getMessage();
