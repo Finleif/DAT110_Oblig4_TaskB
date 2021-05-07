@@ -36,10 +36,16 @@ public class App {
             return gson.toJson("IoT Access Control Device");
         });
 
+        put("accessdevice/code", ((request, response) -> {
+
+            accesscode = gson.fromJson(request.body(), AccessCode.class);
+
+            return gson.toJson(accesscode);
+        }));
+
         get("/accessdevice/log/", (req, res) -> accesslog.toJson());
 
         get("/accessdevice/log/:id", (req, res) -> {
-
 
             int id = Integer.parseInt(req.params("id"));
 
@@ -47,6 +53,14 @@ public class App {
 
         });
 
+        get("/accessdevice/code", (request, response) -> gson.toJson(accesscode));
+
+        delete("/accessdevice/log/", (request, response) -> {
+
+            accesslog.clear();
+
+            return accesslog.toJson();
+        });
 
         post("/accessdevice/log/", ((request, response) -> {
             String message = gson.fromJson(request.body(), AccessMessage.class).getMessage();
